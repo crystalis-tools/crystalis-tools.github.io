@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme {
+  --color-app-bg: #0b0e14;
+  --color-app-panel: #0e1219;
+  --color-app-elevated: #131823;
+  --color-app-input: #161c27;
+  --color-app-border: #1e2633;
+  --color-app-border-strong: #2a3444;
+  --color-app-text: #d8e0ec;
+  --color-app-text-dim: #8b98ac;
+  --color-app-text-faint: #5d6a7e;
+  --color-app-accent: #3b82f6;
+  --color-app-green: #22c55e;
+  --color-app-yellow: #eab308;
+  --color-app-red: #ef4444;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Rebind Tailwind's stock neutral/gray scales to the app's blue-gray
+     palette so every existing neutral-* / gray-* utility class (used
+     throughout components) renders in the old crystalis-ide look without
+     having to touch each component. */
+  --color-neutral-100: #d8e0ec;
+  --color-neutral-200: #b7c2d4;
+  --color-neutral-300: #98a6bd;
+  --color-neutral-400: #8b98ac;
+  --color-neutral-500: #74839a;
+  --color-neutral-600: #5d6a7e;
+  --color-neutral-700: #2a3444;
+  --color-neutral-800: #1e2633;
+  --color-neutral-900: #0e1219;
+  --color-neutral-950: #0b0e14;
+  --color-gray-100: #d8e0ec;
+  --color-gray-200: #b7c2d4;
+  --color-gray-300: #98a6bd;
+  --color-gray-400: #8b98ac;
+  --color-gray-500: #74839a;
+  --color-gray-600: #5d6a7e;
+  --color-gray-700: #2a3444;
+  --color-gray-800: #1e2633;
+  --color-gray-900: #0e1219;
+  --color-gray-950: #0b0e14;
+}
+
+@layer base {
+  *, ::before, ::after {
+    box-sizing: border-box;
+  }
+
+  html, body, #root {
+    height: 100dvh;
+    margin: 0;
+  }
+
+  body {
+    overflow: hidden;
+    background: var(--color-app-bg);
+    color: var(--color-app-text);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button, input, select, textarea {
+    font: inherit;
+    color: inherit;
+  }
+}
+
+* {
+  scrollbar-color: #4c5a70 #0d1219;
+  scrollbar-width: thin;
+}
+
+@keyframes tile-blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.85; }
+}
+
+.animate-tile-blink {
+  animation: tile-blink 0.35s ease-in-out 8 forwards;
+}
+
+/* Recolor dockview's abyss theme to the app palette instead of its own
+   blue/purple defaults, and make the drag sashes highlight like the old
+   custom resize handle did on hover. */
+.dockview-theme-abyss {
+  --dv-color-abyss-dark: var(--color-app-bg);
+  --dv-color-abyss: var(--color-app-panel);
+  --dv-color-abyss-light: var(--color-app-elevated);
+  --dv-color-abyss-lighter: var(--color-app-border-strong);
+  --dv-color-abyss-accent: var(--color-app-accent);
+  --dv-color-abyss-primary-text: var(--color-app-text);
+  --dv-color-abyss-secondary-text: var(--color-app-text-dim);
+  --dv-tabs-and-actions-container-font-size: 14px;
+  --dv-separator-border: var(--color-app-border);
+  --dv-sash-color: transparent;
+  --dv-active-sash-color: var(--color-app-accent);
+}

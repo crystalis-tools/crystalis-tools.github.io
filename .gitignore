@@ -1,0 +1,27 @@
+node_modules/
+dist/
+*.nes
+*.bps
+
+# env
+.env
+.env.*
+!.env.example
+
+# logs
+npm-debug.log*
+*.log
+
+# vite / ts
+.vite/
+*.tsbuildinfo
+
+# editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# os
+.DS_Store
+Thumbs.db
+.bash-guard.local

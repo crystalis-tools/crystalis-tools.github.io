@@ -1,0 +1,54 @@
+name: Build and deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-dist
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Use latest Node.js release
+        uses: actions/setup-node@v6
+        with:
+          node-version: latest
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production site
+        run: npm run build
+
+      - name: Force-push a single-commit dist branch
+        shell: bash
+        run: |
+          deploy_dir="$RUNNER_TEMP/dist-branch"
+          mkdir -p "$deploy_dir"
+          cp -a dist/. "$deploy_dir/"
+          rm -rf dist
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan dist-deploy
+          git rm -rf .
+          git clean -fdx
+
+          cp -a "$deploy_dir/." .
+          touch .nojekyll
+          git add --all
+          git commit -m "Deploy ${GITHUB_SHA}"
+          git push --force origin HEAD:dist
